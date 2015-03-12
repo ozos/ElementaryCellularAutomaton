@@ -45,7 +45,7 @@ namespace System.Windows.Controls
 
         private bool IsActionKey(Key inKey)
         {
-            return inKey == Key.Delete || inKey == Key.Back || inKey == Key.Tab || inKey == Key.Return || Keyboard.Modifiers.HasFlag(ModifierKeys.Alt);
+            return inKey == Key.Delete || inKey == Key.Back || inKey == Key.Tab || inKey == Key.Enter || inKey == Key.Return || Keyboard.Modifiers.HasFlag(ModifierKeys.Alt);
         }
 
         private string LeaveOnlyNumbers(String inString)
@@ -82,9 +82,10 @@ namespace System.Windows.Controls
                 {
                     base.Text = "255";
                 }
-            }catch(FormatException)
-            {}
+            }
+            catch (FormatException)
+            { }
         }
         #endregion
     }
-}   
+}

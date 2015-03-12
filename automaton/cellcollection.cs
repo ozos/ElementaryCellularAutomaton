@@ -16,7 +16,7 @@ namespace automaton
         public CellCollection(int size)
         {
             _size = size;
-            _cells = new cell[_size,_size];
+            _cells = new cell[_size, _size];
             _nextGeneration = new bool[_size];
 
             for (int row = 0; row < _size; row++)
@@ -26,7 +26,7 @@ namespace automaton
                     _cells[row, column] = new cell();
                 }
             }
-            
+
         }
 
 
@@ -57,7 +57,8 @@ namespace automaton
             return s;
         }
 
-        private int BoolToInt(bool b){
+        private int BoolToInt(bool b)
+        {
 
             return b == true ? 1 : 0;
         }
@@ -73,9 +74,9 @@ namespace automaton
             if (i3 >= _size) i3 -= _size;
 
             nb = Convert.ToByte(
-                4 * Convert.ToByte(BoolToInt(_cells[gen,i1].IsAlive)) +
-                2 * Convert.ToByte(BoolToInt(_cells[gen,i2].IsAlive)) +
-                Convert.ToByte(BoolToInt(_cells[gen,i3].IsAlive)));
+                4 * Convert.ToByte(BoolToInt(_cells[gen, i1].IsAlive)) +
+                2 * Convert.ToByte(BoolToInt(_cells[gen, i2].IsAlive)) +
+                Convert.ToByte(BoolToInt(_cells[gen, i3].IsAlive)));
 
             return nb;
         }
@@ -86,8 +87,8 @@ namespace automaton
         {
 
             string rl = getBase2(rule);
-            _cells[0,_size / 2].IsAlive = true;
-   
+            _cells[0, _size / 2].IsAlive = true;
+
 
             for (int gen = 1; gen < _size; gen++)
             {
@@ -95,16 +96,16 @@ namespace automaton
                 int i = 0;
                 while (true)
                 {
-                    byte b = getCells(gen-1,i);
+                    byte b = getCells(gen - 1, i);
                     _nextGeneration[i] = ('1' == (rl[7 - b])) ? true : false;
                     if (++i == _size) break;
                 }
 
                 i = 0;
                 foreach (bool b in _nextGeneration)
-                     _cells[gen,i++].IsAlive = b;
+                    _cells[gen, i++].IsAlive = b;
             }
-            
+
         }
 
         public void kill()
@@ -113,13 +114,13 @@ namespace automaton
             {
                 for (int column = 0; column < _size; column++)
                 {
-                    _cells[row, column].IsAlive=false;
+                    _cells[row, column].IsAlive = false;
                 }
             }
 
         }
 
 
-     
+
     }
 }

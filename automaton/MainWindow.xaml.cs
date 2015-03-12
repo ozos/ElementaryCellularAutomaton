@@ -8,6 +8,8 @@ using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Input;
+
 
 namespace automaton
 {
@@ -24,15 +26,21 @@ namespace automaton
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(Window_Loaded);
             InitializeGrid();
-        
 
-
-
+        }
+        private void RuleNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                startButton_Click(this, new RoutedEventArgs());
+            }
         }
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
             startButton.Click += new RoutedEventHandler(startButton_Click);
+            RuleNumber.KeyDown += new KeyEventHandler(RuleNumber_KeyDown);
+
         }
 
 
@@ -45,14 +53,14 @@ namespace automaton
                 Grid.RowDefinitions.Add(new RowDefinition());
             }
 
-            for (int row =0; row < MaxGridSize; row++)
+            for (int row = 0; row < MaxGridSize; row++)
             {
                 for (int column = 0; column < MaxGridSize; column++)
                 {
                     Ellipse ellipse = new Ellipse();
                     Grid.SetColumn(ellipse, column);
                     Grid.SetRow(ellipse, row);
-                    ellipse.DataContext = _cells[row,column];
+                    ellipse.DataContext = _cells[row, column];
                     Grid.Children.Add(ellipse);
                     ellipse.Style = Resources["lifeStyle"] as Style;
                 }
@@ -61,13 +69,14 @@ namespace automaton
         void startButton_Click(object sender, RoutedEventArgs e)
         {
             _cells.kill();
-           
+
             try
             {
                 _cells.UpdateLife(Convert.ToInt32(RuleNumber.Text));
 
             }
-            catch (FormatException){
+            catch (FormatException)
+            {
                 MessageBox.Show("Please, Introduce a rule", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
